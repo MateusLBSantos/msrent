@@ -6,22 +6,23 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mateus.msrent.dto.ClienteDTO;
-import com.mateus.msrent.services.ClienteService;
+import com.mateus.msrent.dto.ClientDTO;
+import com.mateus.msrent.services.ClientService;
 
 @RestController
 @RequestMapping(value = "/clients")
-public class ClienteResource {
+public class ClientResource {
 	
 	@Autowired
-	private ClienteService service;
+	private ClientService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<ClienteDTO>> findPageAll(
+	public ResponseEntity<Page<ClientDTO>> findPageAll(
 			@RequestParam(value = "page", defaultValue = "0")Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -30,9 +31,16 @@ public class ClienteResource {
 		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		
-		Page<ClienteDTO> list = service.findAllPaged(pageRequest);
+		Page<ClientDTO> list = service.findAllPaged(pageRequest);
 		
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
+		
+		ClientDTO dto = service.findById(id);
+		return ResponseEntity.ok().body(dto);
 	}
 	
 

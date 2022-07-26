@@ -1,43 +1,26 @@
-package com.mateus.msrent.entities;
+package com.mateus.msrent.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.mateus.msrent.entities.Client;
 
-import org.hibernate.validator.constraints.br.CPF;
-
-@Entity
-@Table(name = "tb_clients")
-public class Cliente implements Serializable {
+public class ClientDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String name;
-	
-	@CPF
 	private String cpf;
 	private Double income;
-	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant birthDate;
-	
 	private Integer children;
-
-	public Cliente() {
+	
+	public ClientDTO() {
 
 	}
 
-	public Cliente(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
+	public ClientDTO(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -45,6 +28,16 @@ public class Cliente implements Serializable {
 		this.income = income;
 		this.birthDate = birthDate;
 		this.children = children;
+	}
+	
+	public ClientDTO(Client entity) {
+		super();
+		this.id = entity.getId();
+		this.name = entity.getName();
+		this.cpf = entity.getCpf();
+		this.income = entity.getIncome();
+		this.birthDate = entity.getBirthDate();
+		this.children = entity.getChildren();
 	}
 
 	public Long getId() {
@@ -108,8 +101,11 @@ public class Cliente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		ClientDTO other = (ClientDTO) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
+	
+	
+	
 }
