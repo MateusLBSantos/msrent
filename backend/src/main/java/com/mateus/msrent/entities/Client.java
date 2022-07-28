@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 @Entity
 @Table(name = "tb_clients")
 public class Client implements Serializable {
@@ -23,8 +21,6 @@ public class Client implements Serializable {
 	private Long id;
 	
 	private String name;
-	
-	@CPF
 	private String cpf;
 	private Double income;
 	
